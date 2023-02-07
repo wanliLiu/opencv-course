@@ -42,11 +42,11 @@ def stackImages(scale,imgArray):
 
 cv2.namedWindow("TrackBars")
 cv2.resizeWindow("TrackBars",1080,240)
-cv2.createTrackbar("Hue Min","TrackBars",0,179,empty)
-cv2.createTrackbar("Hue Max","TrackBars",179,179,empty)
+cv2.createTrackbar("Hue Min","TrackBars",20,179,empty)
+cv2.createTrackbar("Hue Max","TrackBars",170,179,empty)
 cv2.createTrackbar("Sat Min","TrackBars",0,255,empty)
-cv2.createTrackbar("Sat Max","TrackBars",255,255,empty)
-cv2.createTrackbar("Val Min","TrackBars",150,255,empty)
+cv2.createTrackbar("Sat Max","TrackBars",174,255,empty)
+cv2.createTrackbar("Val Min","TrackBars",230,255,empty)
 cv2.createTrackbar("Val Max","TrackBars",255,255,empty)
 
 resourceDir = "%s/Resources" % root_dir()
@@ -72,6 +72,10 @@ fileIndex = 0
 
 kernel = np.ones((5,5),np.uint8)
 
+# Create the HOG descriptor
+hog = cv2.HOGDescriptor()
+hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
+
 while True:
     path = os.path.join(resourceDir, fileList[fileIndex])
     img = cv2.imread(path)
@@ -95,13 +99,22 @@ while True:
 
     contours,hierarchy = cv2.findContours(mask,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
     cv2.drawContours(img, contours, -1, (255, 0, 0), 10)
-    cv2.drawContours(imgEroded, contours, -1, (255, 0, 0), 10)
+
+
+    # # Detect the object
+    # rects, _ = hog.detectMultiScale(mask, winStride=(4, 4), padding=(8, 8), scale=1.05)
+
+    # # Draw rectangles around the detected objects
+    # for (x, y, w, h) in rects:
+    #     cv2.rectangle(img, (x, y), (x+w, y+h), (0, 0, 255), 2)
+        
+    # cv2.drawContours(imgEroded, contours, -1, (255, 0, 0), 10)
     # cv2.imshow("Original",img)
     # cv2.imshow("HSV",imgHSV)
     # cv2.imshow("Mask", mask)
     # cv2.imshow("Result", imgResult)
 
-    imgStack = stackImages(0.5,([img, imgHSV, mask, imgResult],
+    imgStack = stackImages(0.3,([img, imgHSV, mask, imgResult],
                                 [imgBlur, imgCanny, imgDialation, imgEroded]))
     cv2.imshow("Stacked Images", imgStack)
 
