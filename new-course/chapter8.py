@@ -38,11 +38,11 @@ def getContours(img):
     contours,hierarchy = cv2.findContours(img,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
     for cnt in contours:
         area = cv2.contourArea(cnt)
-        print(area)
+        print(f'面积 {area}')
         if area>500:
-            cv2.drawContours(imgContour, cnt, -1, (255, 0, 0), 3)
+            # cv2.drawContours(imgContour, cnt, -1, (255, 0, 0), 3)
             peri = cv2.arcLength(cnt,True)
-            #print(peri)
+            print(f'peri arcLength {peri}')
             approx = cv2.approxPolyDP(cnt,0.02*peri,True)
             print(len(approx))
             objCor = len(approx)
