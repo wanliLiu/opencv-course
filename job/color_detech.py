@@ -42,12 +42,12 @@ def stackImages(scale,imgArray):
 
 cv2.namedWindow("TrackBars")
 cv2.resizeWindow("TrackBars",1080,240)
-cv2.createTrackbar("Hue Min","TrackBars",20,179,empty)
-cv2.createTrackbar("Hue Max","TrackBars",170,179,empty)
-cv2.createTrackbar("Sat Min","TrackBars",0,255,empty)
-cv2.createTrackbar("Sat Max","TrackBars",174,255,empty)
-cv2.createTrackbar("Val Min","TrackBars",230,255,empty)
-cv2.createTrackbar("Val Max","TrackBars",255,255,empty)
+cv2.createTrackbar("Hue Min","TrackBars",100,179,empty)
+cv2.createTrackbar("Hue Max","TrackBars",100,179,empty)
+cv2.createTrackbar("Sat Min","TrackBars",255,255,empty)
+cv2.createTrackbar("Sat Max","TrackBars",255,255,empty)
+cv2.createTrackbar("Val Min","TrackBars",24,255,empty)
+cv2.createTrackbar("Val Max","TrackBars",24,255,empty)
 
 resourceDir = "%s/Resources" % root_dir()
 print(f'root-dir = {resourceDir}')
